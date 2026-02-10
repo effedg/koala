@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Koala Mobile</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            /* Foto centrata e adattata */
+            background-image: url("lolaefede.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Evita lo scroll su mobile */
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Posizionamento Koala in alto a destra */
+        .koala-section {
+            position: absolute;
+            top: 20px;   /* Distanza dall'alto */
+            right: 10px;  /* Distanza da destra */
+            width: 150px; /* Ridotto per mobile */
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* Scaliamo tutto il koala per farlo stare bene su mobile */
+        .koala-button {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            transform: scale(0.7) translateY(80px); /* Posizione iniziale ancora più in basso */
+        }
+
+        .koala-button.climbing {
+            transform: scale(0.7) translateY(-10px) rotate(-10deg); /* Salta sul ramo */
+        }
+
+        /* Branch e Leaves ridimensionati per l'angolo */
+        .branch {
+            position: absolute;
+            top: 80px;
+            right: 10px;
+            width: 100px;
+            height: 15px;
+            background: #8B4513;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .leaves {
+            position: absolute;
+            top: 60px;
+            right: 5px;
+            transform: scale(0.6);
+        }
+
+        /* --- STILI ESTETICI KOALA (Invariati ma scalati dal parent) --- */
+        .koala { width: 100px; height: 120px; position: relative; }
+        .koala-body { position: absolute; width: 70px; height: 80px; background: #A9A9A9; border-radius: 50% 50% 45% 45%; bottom: 0; left: 15px; }
+        .koala-belly { position: absolute; width: 50px; height: 60px; background: #E5E5E5; border-radius: 50%; bottom: 5px; left: 10px; }
+        .koala-head { position: absolute; width: 60px; height: 65px; background: #A9A9A9; border-radius: 50%; top: 0; left: 20px; }
+        .ear { position: absolute; width: 35px; height: 35px; background: #A9A9A9; border-radius: 50%; top: -5px; }
+        .ear.left { left: -10px; } .ear.right { right: -10px; }
+        .ear-inner { position: absolute; width: 20px; height: 20px; background: #FFB6C1; border-radius: 50%; top: 8px; left: 8px; }
+        .face { position: absolute; width: 45px; height: 50px; background: #E5E5E5; border-radius: 50%; bottom: 8px; left: 8px; }
+        .nose { position: absolute; width: 18px; height: 14px; background: #000; border-radius: 50% 50% 60% 60%; bottom: 15px; left: 14px; }
+        .eye { position: absolute; width: 8px; height: 10px; background: #000; border-radius: 50%; top: 12px; }
+        .eye.left { left: 10px; } .eye.right { right: 10px; }
+        .arm { position: absolute; width: 25px; height: 50px; background: #A9A9A9; border-radius: 50%; }
+        .arm.left { top: 30px; left: -5px; transform: rotate(-30deg); }
+        .arm.right { top: 30px; right: -5px; transform: rotate(30deg); }
+        .leg { position: absolute; width: 28px; height: 35px; background: #A9A9A9; border-radius: 50% 50% 60% 60%; bottom: -5px; }
+        .leg.left { left: 10px; } .leg.right { right: 10px; }
+
+        .instruction {
+            margin-top: 65px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        .leaf { position: absolute; width: 35px; height: 55px; background: #228B22; border-radius: 0 50% 50% 50%; transform: rotate(-45deg); }
+        .leaf:nth-child(1) { top: 0; right: 10px; }
+        .leaf:nth-child(2) { top: 15px; right: 30px; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="koala-section">
+            <div class="leaves">
+                <div class="leaf"></div>
+                <div class="leaf"></div>
+            </div>
+            <div class="branch"></div>
+            
+            <button class="koala-button" onclick="climbTree(this)">
+                <div class="koala">
+                    <div class="koala-body">
+                        <div class="koala-belly"></div>
+                        <div class="arm left"></div>
+                        <div class="arm right"></div>
+                        <div class="leg left"></div>
+                        <div class="leg right"></div>
+                    </div>
+                    <div class="koala-head">
+                        <div class="ear left"><div class="ear-inner"></div></div>
+                        <div class="ear right"><div class="ear-inner"></div></div>
+                        <div class="face">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                            <div class="nose"></div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+            <div class="instruction">Clicca F</div>
+        </div>
+    </div>
+
+    <script>
+        function climbTree(button) {
+            button.classList.toggle('climbing');
+        }
+    </script>
+</body>
+</html>
